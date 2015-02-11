@@ -60,7 +60,30 @@ def gettotalerrors(ip, user, password):
     return(error_count)
 
 
-
+def getstpdetail(ip, user, password):
+    url = 'http://%s/ins' % (ip)
+    type = "cli_show_ascii"
+    command = "show spanning-tree detail"
+    output = "json"
+    totaltcn = 0
+    change_times = []
+    raw_data = send_command(url, user, password, type, command, output)
+    raw_body = raw_data["ins_api"]["outputs"]["output"]["body"]
+    for x in raw_body.splitlines(keepends=False):
+        if "Number of topology changes" in x:
+            y = x.split("changes ", 1)
+            #print(y)
+            tcn = (y[1].split(" ",1))
+            totaltcn += int(tcn[0])
+            z = (tcn[1].split("occurred ",1))
+            z = (z[1].split(" ",1))
+            change_times.append(z[0])
+    #print(totaltcn)
+    #print(change_times)
+    recenttcn = sorted(change_times)[0]
+    #print(sorted(change_times)[0])
+    stpinfo = [totaltcn, recenttcn]
+    return stpinfo
 
 def send_command(url, user, password, type, myinput, output):
     myheaders={'content-type':'application/json'}

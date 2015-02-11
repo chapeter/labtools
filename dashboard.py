@@ -21,6 +21,10 @@ def build_devicecache():
         password = devicelist['lab'][x]['pass']
         id = devicelist['lab'][x]['id']
         total_errors = nxostools.gettotalerrors(ip, user, password)
+        rawtcn = nxostools.getstpdetail(ip, user, password)
+        totaltcn = rawtcn[0]
+        lasttcn = rawtcn[1]
+
         if devicelist['lab'][x]['type'] == 'nexus9000' or devicelist['lab'][x]['type'] == 'nexus3000':
             version = nxostools.showver(ip, user, password)
             uptime = nxostools.getuptime(ip, user, password)
@@ -44,6 +48,8 @@ def build_devicecache():
         devicecache[id]['runversion'] = version
         devicecache[id]['latestversion'] = latestversion
         devicecache[id]['totalerrors'] = total_errors
+        devicecache[id]['totaltcn'] = totaltcn
+        devicecache[id]['lasttcn'] = lasttcn
 
     return devicecache
 
