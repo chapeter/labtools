@@ -16,11 +16,11 @@ def build_devicecache():
     latest3000 = feeds.get_code3000()
     latest9000 = feeds.get_code()
     for x in devicelist['lab']:
-        latestversion = ""
         ip = devicelist['lab'][x]['host']
         user = devicelist['lab'][x]['user']
         password = devicelist['lab'][x]['pass']
         id = devicelist['lab'][x]['id']
+        total_errors = nxostools.gettotalerrors(ip, user, password)
         if devicelist['lab'][x]['type'] == 'nexus9000' or devicelist['lab'][x]['type'] == 'nexus3000':
             version = nxostools.showver(ip, user, password)
             uptime = nxostools.getuptime(ip, user, password)
@@ -43,6 +43,7 @@ def build_devicecache():
         devicecache[id]['uptime'] = uptime
         devicecache[id]['runversion'] = version
         devicecache[id]['latestversion'] = latestversion
+        devicecache[id]['totalerrors'] = total_errors
 
     return devicecache
 

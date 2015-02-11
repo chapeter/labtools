@@ -31,7 +31,33 @@ def getuptime(ip, user, password):
 
 
 
+def getinterfaceerrors(ip, user, password):
+    url = 'http://%s/ins' % (ip)
+    type = "cli_show"
+    command = "show interface counters errors"
+    output = "json"
 
+    raw_data = send_command(url, user, password, type, command, output)
+
+    return raw_data
+
+
+def gettotalerrors(ip, user, password):
+    raw_errors = getinterfaceerrors(ip, user, password)
+    raw_errors = json.dumps(raw_errors, indent=2)
+
+    str_errors = (str(raw_errors))
+    error_count = 0
+    #print(str_errors)
+
+    for x in str_errors.splitlines(keepends=False):
+        if "eth_giants" in x or "eth_inmacrx_err" in x or "eth_inmactx_err" in x or "eth_deferred_tx" in x or "eth_symbol_err" in x or "eth_align_error" in x or "eth_rcv_err" in x or "eth_fcs_err" in x or "eth_xmit_err" in x or "eth_undersize" in x or "eth_outdisc" in x or "eth_runts" in x or "eth_carri_sen" in x or "eth_excess_col" in x or "eth_multi_col" in x or "eth_late_col" in x or "eth_single_col" in x:
+            #print(x)
+            y = x.split(": ", 1)[1]
+            #print(y)
+            #print(y.split(",", 1)[0])
+            error_count += int(y.split(",", 1)[0])
+    return(error_count)
 
 
 
