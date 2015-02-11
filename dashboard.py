@@ -13,7 +13,10 @@ devicelist = yaml.load(cfgFile)
 
 def build_devicecache():
     devicecache = {}
+    latest3000 = feeds.get_code3000()
+    latest9000 = feeds.get_code()
     for x in devicelist['lab']:
+        latestversion = ""
         ip = devicelist['lab'][x]['host']
         user = devicelist['lab'][x]['user']
         password = devicelist['lab'][x]['pass']
@@ -21,10 +24,10 @@ def build_devicecache():
         if devicelist['lab'][x]['type'] == 'nexus9000' or devicelist['lab'][x]['type'] == 'nexus3000':
             version = nxostools.showver(ip, user, password)
             uptime = nxostools.getuptime(ip, user, password)
-            if devicelist['lab'][x]['type'] == 'nexus3000':
-                latestversion = feeds.get_code3000()
+            if devicelist['lab'][x]['type'] == 'nexus9000':
+                latestversion = latest9000
             else:
-                latestversion = feeds.get_code()
+                latestversion = latest3000
 
         else:
             version = "%s dashboard in progress" % (devicelist['lab'][x]['type'])
