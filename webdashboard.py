@@ -27,6 +27,3 @@ webtools3.HTMLHeader()
 dict_to_table()
 webtools3.HTMLFooter()
 
-#webpage = open("webdashboard.html", "w")
-#webpage.write(webtools.HTMLHeader_s())
-#webpage.close()

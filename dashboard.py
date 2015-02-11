@@ -3,6 +3,7 @@ __author__ = 'chapeter@cisco.com'
 
 import nxostools
 import yaml
+import feeds
 
 
 cfgFile = open('devices.cfg', 'r')
@@ -20,7 +21,10 @@ def build_devicecache():
         if devicelist['lab'][x]['type'] == 'nexus9000' or devicelist['lab'][x]['type'] == 'nexus3000':
             version = nxostools.showver(ip, user, password)
             uptime = nxostools.getuptime(ip, user, password)
-            latestversion = "LATEST RELEASE HERE"
+            if devicelist['lab'][x]['type'] == 'nexus3000':
+                latestversion = feeds.get_code3000()
+            else:
+                latestversion = feeds.get_code()
 
         else:
             version = "%s dashboard in progress" % (devicelist['lab'][x]['type'])

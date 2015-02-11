@@ -32,13 +32,8 @@ def getuptime(ip, user, password):
 
 
 
-#def showiparp(ip, user, password, targetip, vrf):
-#    url = 'http://%s/ins' % (ip)
-#    type = "cli_show"
-#    command = "show ip arp %s vrf %s" % (targetip, vrf)
-#    output = "json"
 
-#    raw_data = send_command(url, user, password, type, command, output)
+
 
 
 def send_command(url, user, password, type, myinput, output):
