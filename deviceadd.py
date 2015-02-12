@@ -22,7 +22,7 @@ def create():
     username  = form.getfirst("username")
     password = form.getfirst("password")
     type = form.getfirst("type")
-    print("<br>Adding %s" % id)
+    #print("<br>Adding %s" % id)
 
     newdevice = {"id" : id, "host" : ip, "user" : username, "pass" : password, "type" : type}
     devices["lab"][id] = newdevice
@@ -30,7 +30,7 @@ def create():
     cfgFile = 'devices.cfg'
     f = open(cfgFile, 'w')
     f.write(yaml.dump(devices, default_flow_style=False))
-    print(yaml.dump(devices, default_flow_style=False))
+    #print(yaml.dump(devices, default_flow_style=False))
     f.close()
     #
     #f.write('host : %s\n' % hostname )
@@ -42,5 +42,9 @@ def create():
 
 webtools3.HTMLHeader()
 create()
+print('''
+<a href="webdashboard.py">dashboard</a>
+<a href="configure.html">Add another Device</a>
+''')
 webtools3.HTMLFooter()
 
