@@ -43,7 +43,7 @@ def create():
 webtools3.HTMLHeader()
 create()
 print('''
-<a href="webdashboard.py">dashboard</a>
+<a href="webdashboard.py">dashboard</a><br>
 <a href="configure.html">Add another Device</a>
 ''')
 webtools3.HTMLFooter()

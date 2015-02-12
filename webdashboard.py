@@ -25,6 +25,9 @@ def maketd(data):
 
 webtools3.HTMLHeader()
 dict_to_table()
-print('<a href='+'"'+'configure.html'+'">Add Device</a></p>')
+print('''
+<a href="configure.html">Add another device</a>
+<a href="webdashboard.html">Web Dashboard</a>
+''')
 webtools3.HTMLFooter()
 
