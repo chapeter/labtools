@@ -7,12 +7,28 @@ import cgi
 import yaml
 import webtools3
 
-def create():
-    cfgFile = 'devices.cfg'
-    f = open(cfgFile, 'r')
+cfgFile = 'devices.cfg'
+f = open(cfgFile, 'r')
 
-    devices = yaml.load(f)
+devices = yaml.load(f)
+f.close()
+
+
+def createfirst():
+    form   = cgi.FieldStorage()
+    id = form.getfirst("id")
+    ip  = form.getfirst("ip")
+    username  = form.getfirst("username")
+    password = form.getfirst("password")
+    type = form.getfirst("type")
+
+    firstentry = {"lab" : {id : {"id" : id, "host" : ip, "user" : username, "pass" : password, "type" : type}}}
+    cfgFile = 'devices.cfg'
+    f = open(cfgFile, 'w')
+    f.write(yaml.dump(firstentry, default_flow_style=False))
     f.close()
+def create():
+
 
 
 
@@ -41,7 +57,12 @@ def create():
 
 
 webtools3.HTMLHeader()
-create()
+if devices == None:
+    createfirst()
+else:
+    create()
+
+
 print('''
 <a href="webdashboard.py">dashboard</a><br>
 <a href="configure.html">Add another Device</a>
