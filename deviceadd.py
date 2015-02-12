@@ -27,11 +27,8 @@ def createfirst():
     f = open(cfgFile, 'w')
     f.write(yaml.dump(firstentry, default_flow_style=False))
     f.close()
+
 def create():
-
-
-
-
     form   = cgi.FieldStorage()
     id = form.getfirst("id")
     ip  = form.getfirst("ip")
